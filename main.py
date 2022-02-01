@@ -9,12 +9,14 @@
 
 import pygame as pg
 from classes import *
+from tools import *
 
 pg.init()
 clock = pg.time.Clock()
 
 
 ## Setup
+# Config defaults
 options = {
     # Window properties
     "window_size": (720, 720),
@@ -26,6 +28,9 @@ options = {
     # Snake properties
     "snake_color": "#458588"
 }
+
+config = parse_config("config.ini")  # Read configfile
+options = patch_options(config, options)  # Set configured options
 
 # Calculate cell size
 cell_size = options["window_size"][0] // options["cell_amount"]
