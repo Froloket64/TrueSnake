@@ -23,7 +23,6 @@ BLUE = "#458588"
 
 # Window propeties
 window_size = (720, 720)
-window = pg.display.set_mode(window_size)
 window_bg = WHITE
 
 # Cell propeties
@@ -31,10 +30,15 @@ cell_amount = 10
 cell_size = window_size[0] // cell_amount
 
 
-window.fill(window_bg)
+# Create a window instance
+window = Window(window_size, WHITE)
 
-snake = SnakeSegment(cell_size, BLUE)
-snake.draw(window)
+window.surface.fill(window_bg)
+
+
+# Create a snake
+snake = SnakeSegment(window, cell_size, BLUE)
+
 
 pg.display.update()
 
@@ -53,24 +57,24 @@ while running:
                     running = False
 
                 case pg.K_RIGHT:
-                    snake.move((cell_size, 0), window, window_bg)
+                    snake.move((cell_size, 0))
                     timer = 0  # Reset passive move timer
 
                 case pg.K_LEFT:
-                    snake.move((-cell_size, 0), window, window_bg)
+                    snake.move((-cell_size, 0))
                     timer = 0
 
                 case pg.K_DOWN:
-                    snake.move((0, cell_size), window, window_bg)
+                    snake.move((0, cell_size))
                     timer = 0
 
                 case pg.K_UP:
-                    snake.move((0, -cell_size), window, window_bg)
+                    snake.move((0, -cell_size))
                     timer = 0
 
 
     if timer == 60:
-        snake.passive_move(window, window_bg)
+        snake.passive_move()
 
     # timer = (timer + 1) % 61
     timer += 1
