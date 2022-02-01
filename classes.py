@@ -15,6 +15,9 @@ class Window():
         # Init a pg.Surface
         self.surface = pg.display.set_mode(size)
 
+        # Set the bg
+        self.surface.fill(self.bg_color)
+
 
 class SnakeSegment():
     def __init__(self, window, size: int, color: str, pos: Tuple[int, int] = (0, 0), latest_dir: Tuple[int, int] = (0, 0)):

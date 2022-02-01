@@ -15,29 +15,28 @@ clock = pg.time.Clock()
 
 
 ## Setup
-# Colors
-# WHITE = (255, 255, 255)
-WHITE = "#fbf1c7"
-BLUE = "#458588"
+options = {
+    # Window properties
+    "window_size": (720, 720),
+    "window_bg": "#fbf1c7",
 
+    # Cell properties
+    "cell_amount": 10,
 
-# Window propeties
-window_size = (720, 720)
-window_bg = WHITE
+    # Snake properties
+    "snake_color": "#458588"
+}
 
-# Cell propeties
-cell_amount = 10
-cell_size = window_size[0] // cell_amount
+# Calculate cell size
+cell_size = options["window_size"][0] // options["cell_amount"]
 
 
 # Create a window instance
-window = Window(window_size, WHITE)
-
-window.surface.fill(window_bg)
+window = Window(options["window_size"], options["window_bg"])
 
 
 # Create a snake
-snake = SnakeSegment(window, cell_size, BLUE)
+snake = SnakeSegment(window, cell_size, options["snake_color"])
 
 
 pg.display.update()
