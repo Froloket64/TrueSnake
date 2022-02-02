@@ -35,15 +35,13 @@ options = patch_options(config, options)  # Set configured options
 # Calculate cell size
 cell_size = options["window_size"][0] // options["cell_amount"]
 
-
 # Create a window instance
 window = Window(options["window_size"], options["window_bg"])
-
 
 # Create a snake
 snake = SnakeSegment(window, cell_size, options["snake_color"])
 
-
+# Update the screen
 pg.display.update()
 
 
@@ -86,7 +84,6 @@ while running:
 
     pg.display.flip()
     clock.tick(60)
-
 
 
 pg.quit()

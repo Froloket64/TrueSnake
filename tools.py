@@ -15,6 +15,12 @@ def patch_options(config, options):
     for section in config.sections():
         for option, value in config.items(section):
             if option in options:
-                options.update({option: value.strip('"')})
+                match type(options[option]).__name__:
+                    case "str":
+                        value = value.strip('"')
+                    case "int":
+                        value = int(value)
+
+                options.update({option: value})
 
     return options
