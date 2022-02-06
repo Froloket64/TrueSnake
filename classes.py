@@ -20,7 +20,7 @@ class Window():
 
 
 class SnakeSegment():
-    def __init__(self, window, size: int, color: str, pos: Tuple[int, int] = (0, 0), latest_dir: Tuple[int, int] = (0, 0)):
+    def __init__(self, window, size: int, color: str, pos: Tuple[int, int] = (0, 0), current_dir: Tuple[int, int] = (0, 0)):
         '''
         surface:  A pg.Surface on which it's displayed
         size:  Size of the square segment in pixels
@@ -28,19 +28,22 @@ class SnakeSegment():
         '''
 
         self.window = window
-        # self.window.surface = self.window
         self.size = size
         self.color = color
         self.hitbox = pg.rect.Rect(pos, (size, size))
-        self.segm = None
-        self.latest_dir = latest_dir
+        self.segment = None
+        self.current_dir = current_dir
+        self.next_dir = None
+        self.ch_dir = False
 
         # Draw the segment
         self.draw()
 
+
     # Draw on screen/surface (an alias to pg.draw.rect)
     def draw(self):
         pg.draw.rect(self.window.surface, self.color, self.hitbox)
+
 
     # Move the snake (+ clear the cell on previous position)
     def move(self, dir):
@@ -50,16 +53,28 @@ class SnakeSegment():
         self.draw()  # Draw the snake on the new position
         pg.draw.rect(self.window.surface, self.window.bg_color, prev_pos)  # Erase the rect on snake's previous position
 
-        self.latest_dir = dir
+        self.current_dir = dir
+
+        if self.segment:
+            self.segment.next_dir = dir
+            self.segment.ch_dir = True
+
+            self.segment.passive_move()
+
 
     # Move in the latest direction every frame / set period of time (called by event loop)
     def passive_move(self):
-        if sum(self.latest_dir):  # If `latest_dir` is not (0, 0)
-            self.move(self.latest_dir)
+        if sum(self.current_dir):  # If `current_dir` is not (0, 0)
+            self.move(self.current_dir)
+
+        if self.ch_dir:
+            self.current_dir = self.next_dir
+            self.ch_dir = False
+
 
     # Attach a new segment to the body
     def add_segm(self):
-        if self.segm:
-            self.segm.add_segm()
+        if self.segment:
+            self.segment.add_segm()
         else:
-            self.segm = SnakeSegment(self.window.surface, self.size, self.color)
+            self.segment = SnakeSegment(self.window, self.size, self.color)
