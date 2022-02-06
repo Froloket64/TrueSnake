@@ -74,7 +74,8 @@ class SnakeSegment():
 
     # Save direction
     def stage_move(self, dir):
-        self.current_dir = dir
+        if not self.opposite(dir, self.current_dir):
+            self.current_dir = dir
 
 
     # Attach a new segment to the body
@@ -83,3 +84,9 @@ class SnakeSegment():
             self.segment.add_segm()
         else:
             self.segment = SnakeSegment(self.window, self.size, self.color)
+
+
+    # A simple utility function to check if directions are opposite
+    @staticmethod
+    def opposite(dir1, dir2):
+        return tuple(map(lambda x: -x, dir2)) == dir1
