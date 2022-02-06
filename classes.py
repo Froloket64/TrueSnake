@@ -72,6 +72,11 @@ class SnakeSegment():
             self.ch_dir = False
 
 
+    # Save direction
+    def stage_move(self, dir):
+        self.current_dir = dir
+
+
     # Attach a new segment to the body
     def add_segm(self):
         if self.segment:

@@ -47,7 +47,7 @@ pg.display.update()
 
 ## Event loop
 running = True
-timer = 0
+timer = 0  # "Move timer"
 while running:
     for event in pg.event.get():
         if event.type == pg.QUIT:
@@ -59,26 +59,25 @@ while running:
                     running = False
 
                 case pg.K_RIGHT:
-                    snake.move((cell_size, 0))
-                    timer = 0  # Reset passive move timer
+                    snake.stage_move((cell_size, 0))  # Save direction to move once the timer is hit
+                    timer = 0  # Reset move timer
 
                 case pg.K_LEFT:
-                    snake.move((-cell_size, 0))
+                    snake.stage_move((-cell_size, 0))
                     timer = 0
 
                 case pg.K_DOWN:
-                    snake.move((0, cell_size))
+                    snake.stage_move((0, cell_size))
                     timer = 0
 
                 case pg.K_UP:
-                    snake.move((0, -cell_size))
+                    snake.stage_move((0, -cell_size))
                     timer = 0
 
 
     if timer == 60:
         snake.passive_move()
 
-    # timer = (timer + 1) % 61
     timer += 1
     timer %= 61
 
