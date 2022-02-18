@@ -2,7 +2,7 @@ import pygame as pg
 from typing import Tuple  # Just some type hints
 
 
-class Window():
+class Window:
     def __init__(self, size, bg_color):
         '''
         size:  Window size
@@ -19,7 +19,7 @@ class Window():
         self.surface.fill(self.bg_color)
 
 
-class SnakeSegment():
+class SnakeSegment:
     def __init__(self, window, size: int, color: str, pos: Tuple[int, int] = (0, 0), current_dir: Tuple[int, int] = (0, 0)):
         '''
         surface:  A pg.Surface on which it's displayed
@@ -30,7 +30,7 @@ class SnakeSegment():
         self.window = window
         self.size = size
         self.color = color
-        self.hitbox = pg.rect.Rect(pos, (size, size))
+        self.hitbox = pg.rect.Rect(pos, (self.size, self.size))
         self.segment = None
         self.current_dir = current_dir
         self.next_dir = None
@@ -45,7 +45,7 @@ class SnakeSegment():
         pg.draw.rect(self.window.surface, self.color, self.hitbox)
 
 
-    # Move the snake (+ clear the cell on previous position)
+    # Move the snake segment (+ clear the cell on previous position)
     def move(self, dir):
         prev_pos = self.hitbox.copy()  # Save previous position
         self.hitbox.move_ip(dir)
@@ -90,3 +90,31 @@ class SnakeSegment():
     @staticmethod
     def opposite(dir1, dir2):
         return tuple(map(lambda x: -x, dir2)) == dir1
+
+
+class Apple:
+    def __init__(self, window, size, color, pos):
+        self.window = window
+        self.size = size
+        self.color = color
+        self.hitbox = pg.rect.Rect(pos, (self.size, self.size))
+
+        self.draw()
+
+
+    # Draw on screen/surface (an alias to pg.draw.rect)
+    def draw(self):
+        pg.draw.rect(self.window.surface, self.color, self.hitbox)
+
+
+    # Change the position and draw on it
+    def redraw(self, pos):
+        # Erase previous position
+        prev_pos = self.hitbox.copy()
+
+        pg.draw.rect(self.window.surface, self.window.bg_color, prev_pos)
+
+        # Draw on new position
+        self.hitbox = pg.rect.Rect(pos, (self.size, self.size))
+
+        self.draw()
