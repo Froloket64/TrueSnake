@@ -83,7 +83,7 @@ class SnakeSegment:
         if self.segment:
             self.segment.add_segm()
         else:
-            self.segment = SnakeSegment(self.window, self.size, self.color)
+            self.segment = SnakeSegment(self.window, self.size, self.color, (self.hitbox.left, self.hitbox.top))
 
 
     # A simple utility function to check if directions are opposite

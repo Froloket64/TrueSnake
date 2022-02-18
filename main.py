@@ -97,6 +97,8 @@ while running:
 
             apple.redraw((x, y))
 
+            snake.add_segm()
+
         snake.passive_move()
 
 
