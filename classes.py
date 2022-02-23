@@ -19,6 +19,34 @@ class Window:
         self.surface.fill(self.bg_color)
 
 
+class Score:
+    def __init__(self, window, fontname, font_size, color, pos):
+        self.window = window
+        self.font = pg.font.SysFont(fontname, font_size)
+        self.color = color
+        self.pos = pos
+        self.points = 0
+
+        self.draw()
+
+
+    # Increment current score by `num`
+    def add(self, num: int = 1):
+        # Remove previous score
+        prev_img = self.font.render(f"Score: {self.points}", True, self.window.bg_color)
+
+        self.window.surface.blit(prev_img, self.pos)
+
+        self.points += num
+
+
+    # Draw new score
+    def draw(self):
+        img = self.font.render(f"Score: {self.points}", True, self.color)
+
+        self.window.surface.blit(img, self.pos)
+
+
 class SnakeSegment:
     def __init__(self, window, size: int, color: str, pos: Tuple[int, int] = (0, 0), current_dir: Tuple[int, int] = (0, 0)):
         '''
