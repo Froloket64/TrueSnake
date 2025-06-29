@@ -1,3 +1,6 @@
+> [!NOTE]
+> This is an old learning project of mine, and it will no longer be supported.
+
 # <div style="text-align: center">TrueSnake</div>
 <!--Little know, that what Python was created for-->
 
